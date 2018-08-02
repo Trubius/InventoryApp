@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">InventoryApp</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_insert_example_book">Insert Example Book</string>
+    <string name="book_contains">The books table contains&#160;</string>
+    <string name="books">&#160;books</string>
+    <string name="lord_of_the_rings">Lord of the Rings</string>
+    <string name="amazon">Amazon</string>
+    <string name="phone_number">00 1 206-266-2992</string>
+    <string name="book_saved">Book saved with ID:</string>
 </resources>
