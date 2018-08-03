@@ -1,13 +1,20 @@
 package com.example.android.inventoryapp.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 public final class BookContract {
+
+    public static final String CONTENT_AUTHORITY = "com.example.android.inventoryapp";
+    private static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    public static final String PATH_BOOKS = "books";
 
     private BookContract() {
     }
 
     public static final class BookEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_BOOKS);
 
         public static final String TABLE_NAME = "books";
         public static final String _ID = BaseColumns._ID;
