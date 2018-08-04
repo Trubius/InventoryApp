@@ -91,11 +91,11 @@ public class BookProvider extends ContentProvider {
         if (quantity != null && quantity < 1) {
             throw new IllegalArgumentException("Book requires a name");
         }
-        String supplierName = values.getAsString(BookEntry.COLUMN_BOOK_NAME);
+        String supplierName = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
         if (supplierName == null) {
             throw new IllegalArgumentException("Book requires a supplier name");
         }
-        String supplierPhone = values.getAsString(BookEntry.COLUMN_BOOK_NAME);
+        String supplierPhone = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
         if (supplierPhone == null) {
             throw new IllegalArgumentException("Book requires a supplier phone number");
         }
@@ -117,6 +117,59 @@ public class BookProvider extends ContentProvider {
 
     @Override
     public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+
+        final int match = sUriMatcher.match(uri);
+        switch (match) {
+            case BOOKS:
+                return updateBook(uri, values, selection, selectionArgs);
+            case BOOK_ID:
+                selection = BookEntry._ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                return updateBook(uri, values, selection, selectionArgs);
+            default:
+                throw new IllegalArgumentException("Update is not supported for " + uri);
+        }
+    }
+
+    public int updateBook(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+
+        if (values.containsKey(BookEntry.COLUMN_BOOK_NAME)) {
+            String name = values.getAsString(BookEntry.COLUMN_BOOK_NAME);
+            if (name == null) {
+                throw new IllegalArgumentException("Book requires a name");
+            }
+        }
+        if (values.containsKey(BookEntry.COLUMN_BOOK_PRICE)) {
+            Integer price = values.getAsInteger(BookEntry.COLUMN_BOOK_PRICE);
+            if (price != null && price < 0) {
+                throw new IllegalArgumentException("Book requires valid price");
+            }
+        }
+        if (values.containsKey(BookEntry.COLUMN_BOOK_QUANTITY)) {
+            Integer quantity = values.getAsInteger(BookEntry.COLUMN_BOOK_QUANTITY);
+            if (quantity != null && quantity < 1) {
+                throw new IllegalArgumentException("Book requires a name");
+            }
+        }
+        if (values.containsKey(BookEntry.COLUMN_BOOK_SUPPLIER_NAME)) {
+            String supplierName = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
+            if (supplierName == null) {
+                throw new IllegalArgumentException("Book requires a supplier name");
+            }
+        }
+        if (values.containsKey(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE)) {
+            String supplierPhone = values.getAsString(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
+            if (supplierPhone == null) {
+                throw new IllegalArgumentException("Book requires a supplier phone number");
+            }
+        }
+
+        if (values.size() == 0) {
+            return 0;
+        }
+
+        SQLiteDatabase database = mBookDbHelper.getWritableDatabase();
+
+        return database.update(BookEntry.TABLE_NAME, values, selection, selectionArgs);
     }
 }
