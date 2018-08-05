@@ -55,6 +55,7 @@ public class BookProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
 
@@ -115,6 +116,7 @@ public class BookProvider extends ContentProvider {
             Log.e(LOG_TAG, "Failed to insert row for " + uri);
             return null;
         }
+        getContext().getContentResolver().notifyChange(uri, null);
         return ContentUris.withAppendedId(uri, id);
     }
 
@@ -122,18 +124,25 @@ public class BookProvider extends ContentProvider {
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
 
         SQLiteDatabase database = mBookDbHelper.getWritableDatabase();
+        int rowsDeleted;
 
         final int match = sUriMatcher.match(uri);
         switch (match) {
             case BOOKS:
-                return database.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = database.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             case BOOK_ID:
                 selection = BookEntry._ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                return database.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+                rowsDeleted = database.delete(BookEntry.TABLE_NAME, selection, selectionArgs);
+                break;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
         }
+        if (rowsDeleted != 0){
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsDeleted;
     }
 
     @Override
@@ -191,6 +200,10 @@ public class BookProvider extends ContentProvider {
 
         SQLiteDatabase database = mBookDbHelper.getWritableDatabase();
 
-        return database.update(BookEntry.TABLE_NAME, values, selection, selectionArgs);
+        int rowsUpdated = database.update(BookEntry.TABLE_NAME, values, selection, selectionArgs);
+        if (rowsUpdated != 0){
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
     }
 }
