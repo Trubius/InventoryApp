@@ -60,6 +60,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Toast.makeText(this, getString(R.string.book_saved), Toast.LENGTH_SHORT).show();
     }
 
+    private void deleteAllBooks() {
+        getContentResolver().delete(BookEntry.CONTENT_URI, null, null);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -69,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_insert_example_book) {
-            insertBook();
+        if (id == R.id.delete_all_books) {
+            deleteAllBooks();
             return true;
         }
 
