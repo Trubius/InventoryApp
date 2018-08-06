@@ -9,10 +9,10 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.BookContract.BookEntry;
@@ -35,7 +35,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        EmptyRecyclerView recyclerView = findViewById(R.id.recycler_view);
+        TextView emptyView = findViewById(R.id.empty_view);
+        recyclerView.setEmptyView(emptyView);
+        emptyView.setText(R.string.get_started);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mBookCursorAdapter = new BookCursorAdapter(this, null);
         recyclerView.setAdapter(mBookCursorAdapter);
