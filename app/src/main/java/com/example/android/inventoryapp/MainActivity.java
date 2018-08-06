@@ -1,23 +1,26 @@
 package com.example.android.inventoryapp;
 
+import android.app.LoaderManager;
 import android.content.ContentValues;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.inventoryapp.data.BookDbHelper;
 import com.example.android.inventoryapp.data.BookContract.BookEntry;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private BookDbHelper mBookDbHelper;
+    private static final int BOOK_LOADER_ID = 1;
+    private BookCursorAdapter mBookCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,21 +32,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 insertBook();
-                displayDatabaseInfo();
             }
         });
 
-        mBookDbHelper = new BookDbHelper(this);
-    }
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mBookCursorAdapter = new BookCursorAdapter(this, null);
+        recyclerView.setAdapter(mBookCursorAdapter);
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        displayDatabaseInfo();
+        getLoaderManager().initLoader(BOOK_LOADER_ID, null, this);
     }
 
     private void insertBook() {
-        SQLiteDatabase db = mBookDbHelper.getWritableDatabase();
+
         ContentValues values = new ContentValues();
         values.put(BookEntry.COLUMN_BOOK_NAME, getString(R.string.lord_of_the_rings));
         values.put(BookEntry.COLUMN_BOOK_PRICE, 20);
@@ -51,64 +52,9 @@ public class MainActivity extends AppCompatActivity {
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, getString(R.string.amazon));
         values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, getString(R.string.phone_number));
 
-        long newRowId = db.insert(BookEntry.TABLE_NAME, null, values);
+        getContentResolver().insert(BookEntry.CONTENT_URI, values);
 
-        Toast.makeText(this, getString(R.string.book_saved) + newRowId, Toast.LENGTH_SHORT).show();
-    }
-
-    private void displayDatabaseInfo() {
-
-        SQLiteDatabase db = mBookDbHelper.getReadableDatabase();
-
-        String[] projection = {
-                BookEntry._ID,
-                BookEntry.COLUMN_BOOK_NAME,
-                BookEntry.COLUMN_BOOK_PRICE,
-                BookEntry.COLUMN_BOOK_QUANTITY,
-                BookEntry.COLUMN_BOOK_SUPPLIER_NAME,
-                BookEntry.COLUMN_BOOK_SUPPLIER_PHONE};
-
-        Cursor cursor = db.query(
-                BookEntry.TABLE_NAME,
-                projection, null, null, null, null, null);
-
-        TextView textView = (TextView) findViewById(R.id.text_view);
-
-        try {
-            textView.setText(getString(R.string.book_contains));
-            textView.append(String.valueOf(cursor.getCount()));
-            textView.append(getString(R.string.books) + "\n\n");
-            textView.append(BookEntry._ID + " - " +
-                    BookEntry.COLUMN_BOOK_NAME + " - " +
-                    BookEntry.COLUMN_BOOK_PRICE + " - " +
-                    BookEntry.COLUMN_BOOK_QUANTITY + " - " +
-                    BookEntry.COLUMN_BOOK_SUPPLIER_NAME + " - " +
-                    BookEntry.COLUMN_BOOK_SUPPLIER_PHONE + "\n");
-
-            int idColumnIndex = cursor.getColumnIndex(BookEntry._ID);
-            int nameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_NAME);
-            int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
-            int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
-            int supplierNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
-            int supplierPhoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
-
-            while (cursor.moveToNext()) {
-                int currentID = cursor.getInt(idColumnIndex);
-                String currentName = cursor.getString(nameColumnIndex);
-                int currentPrice = cursor.getInt(priceColumnIndex);
-                int currentQuantity = cursor.getInt(quantityColumnIndex);
-                String currentSupplierName = cursor.getString(supplierNameColumnIndex);
-                String currentSupplierPhone = cursor.getString(supplierPhoneColumnIndex);
-                textView.append(("\n" + currentID + " - " +
-                        currentName + " - " +
-                        currentPrice + " - " +
-                        currentQuantity + " - " +
-                        currentSupplierName + " - " +
-                        currentSupplierPhone));
-            }
-        } finally {
-            cursor.close();
-        }
+        Toast.makeText(this, getString(R.string.book_saved), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -122,10 +68,31 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_insert_example_book) {
             insertBook();
-            displayDatabaseInfo();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+
+        String[] projection = {
+                BookEntry._ID,
+                BookEntry.COLUMN_BOOK_NAME,
+                BookEntry.COLUMN_BOOK_PRICE,
+                BookEntry.COLUMN_BOOK_QUANTITY};
+
+        return new CursorLoader(this, BookEntry.CONTENT_URI, projection, null, null, null);
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        mBookCursorAdapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        mBookCursorAdapter.swapCursor(null);
     }
 }

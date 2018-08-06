@@ -31,8 +31,8 @@ public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapt
         int priceColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_PRICE);
         int quantityColumnIndex = cursor.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_QUANTITY);
         String productName = cursor.getString(productNameColumnIndex);
-        int price = cursor.getInt(priceColumnIndex);
-        int quantity = cursor.getInt(quantityColumnIndex);
+        String price = cursor.getString(priceColumnIndex);
+        String quantity = cursor.getString(quantityColumnIndex);
 
         viewHolder.mProductName.setText(productName);
         viewHolder.mPrice.setText(price);
