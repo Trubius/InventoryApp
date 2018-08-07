@@ -33,23 +33,23 @@ public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapt
     @Override
     public void onBindViewHolder(BookCursorAdapter.ViewHolder viewHolder, Cursor cursor) {
 
-        int productIdColumnIndex = cursor.getColumnIndex(BookEntry._ID);
-        int productNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_NAME);
+        int bookIdColumnIndex = cursor.getColumnIndex(BookEntry._ID);
+        int bookNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_NAME);
         int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
         int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
-        String productName = cursor.getString(productNameColumnIndex);
+        String bookName = cursor.getString(bookNameColumnIndex);
         int price = cursor.getInt(priceColumnIndex);
         int quantity = cursor.getInt(quantityColumnIndex);
-        final long productId = cursor.getLong(productIdColumnIndex);
+        final long bookId = cursor.getLong(bookIdColumnIndex);
 
-        viewHolder.mProductName.setText(productName);
+        viewHolder.mBookName.setText(bookName);
         viewHolder.mPrice.setText(String.valueOf(price));
         viewHolder.mQuantity.setText(String.valueOf(quantity));
         viewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext.getApplicationContext(), BookDetailsActivity.class);
-                Uri currentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, productId);
+                Uri currentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, bookId);
                 intent.setData(currentBookUri);
                 mContext.startActivity(intent);
             }
@@ -59,7 +59,7 @@ public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapt
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private View mItemView;
-        private TextView mProductName;
+        private TextView mBookName;
         private TextView mPrice;
         private TextView mQuantity;
         private Button mSaleButton;
@@ -67,7 +67,7 @@ public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapt
         public ViewHolder(View itemView) {
             super(itemView);
             mItemView = itemView;
-            mProductName = itemView.findViewById(R.id.product_name);
+            mBookName = itemView.findViewById(R.id.book_name);
             mPrice = itemView.findViewById(R.id.price_value);
             mQuantity = itemView.findViewById(R.id.quantity_value);
             mSaleButton = itemView.findViewById(R.id.sale_button);

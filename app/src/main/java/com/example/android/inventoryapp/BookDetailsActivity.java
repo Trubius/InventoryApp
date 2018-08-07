@@ -17,7 +17,7 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
 
     private static final int EXISTING_BOOK_LOADER_ID = 1;
     private Uri mCurrentBookUri;
-    private TextView mProductName;
+    private TextView mBookName;
     private TextView mPrice;
     private TextView mQuantity;
     private TextView mSupplierName;
@@ -33,7 +33,7 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
 
         getLoaderManager().initLoader(EXISTING_BOOK_LOADER_ID, null, this);
 
-        mProductName = findViewById(R.id.detail_product_name_value);
+        mBookName = findViewById(R.id.detail_book_name_value);
         mPrice = findViewById(R.id.detail_price_value);
         mQuantity = findViewById(R.id.detail_quantity_value);
         mSupplierName = findViewById(R.id.detail_supplier_name_value);
@@ -61,18 +61,18 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
         }
 
         if (cursor.moveToFirst()) {
-            int productNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_NAME);
+            int bookNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_NAME);
             int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
             int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
             int supplierNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
             int supplierPhoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
-            String productName = cursor.getString(productNameColumnIndex);
+            String bookName = cursor.getString(bookNameColumnIndex);
             int price = cursor.getInt(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
             String supplierName = cursor.getString(supplierNameColumnIndex);
             String supplierPhone = cursor.getString(supplierPhoneColumnIndex);
 
-            mProductName.setText(productName);
+            mBookName.setText(bookName);
             mPrice.setText(String.valueOf(price));
             mQuantity.setText(String.valueOf(quantity));
             mSupplierName.setText(supplierName);
