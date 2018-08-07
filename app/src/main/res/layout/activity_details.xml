@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/layout_padding">
+
+    <TextView
+        android:id="@+id/detail_product_name_label"
+        style="@style/detailTextLabelStyle"
+        android:layout_width="@dimen/product_name_width"
+        android:text="@string/product_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/detail_product_name_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/details_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/detail_product_name_label"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/product_name" />
+
+    <TextView
+        android:id="@+id/detail_price_label"
+        style="@style/detailTextLabelStyle"
+        android:layout_width="0dp"
+        android:text="@string/price"
+        app:layout_constraintEnd_toStartOf="@+id/detail_price_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/detail_price_value" />
+
+    <TextView
+        android:id="@+id/detail_price_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/details_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/detail_product_name_value"
+        app:layout_constraintTop_toBottomOf="@+id/detail_product_name_value"
+        tools:text="@string/price" />
+
+    <TextView
+        android:id="@+id/detail_quantity_label"
+        style="@style/detailTextLabelStyle"
+        android:layout_width="0dp"
+        android:text="@string/quantity"
+        app:layout_constraintEnd_toStartOf="@id/detail_quantity_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/detail_quantity_value" />
+
+    <TextView
+        android:id="@+id/detail_quantity_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/details_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/detail_price_value"
+        app:layout_constraintTop_toBottomOf="@id/detail_price_value"
+        tools:text="@string/quantity" />
+
+    <TextView
+        android:id="@+id/detail_supplier_name_label"
+        style="@style/detailTextLabelStyle"
+        android:layout_width="0dp"
+        android:text="@string/supplier_name"
+        app:layout_constraintEnd_toStartOf="@id/detail_supplier_name_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/detail_supplier_name_value" />
+
+    <TextView
+        android:id="@+id/detail_supplier_name_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/details_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/detail_quantity_value"
+        app:layout_constraintTop_toBottomOf="@id/detail_quantity_value"
+        tools:text="@string/supplier_name" />
+
+    <TextView
+        android:id="@+id/detail_supplier_phone_label"
+        style="@style/detailTextLabelStyle"
+        android:layout_width="0dp"
+        android:text="@string/supplier_phone_number"
+        app:layout_constraintEnd_toStartOf="@id/detail_supplier_phone_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/detail_supplier_phone_value" />
+
+    <TextView
+        android:id="@+id/detail_supplier_phone_value"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/details_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/detail_supplier_name_value"
+        app:layout_constraintTop_toBottomOf="@id/detail_supplier_name_value"
+        tools:text="@string/supplier_phone_number" />
+
+</android.support.constraint.ConstraintLayout>
