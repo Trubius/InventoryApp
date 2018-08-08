@@ -1,7 +1,9 @@
 package com.example.android.inventoryapp;
 
+import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -9,7 +11,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.BookContract.BookEntry;
 
@@ -38,6 +43,27 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
         mQuantity = findViewById(R.id.detail_quantity_value);
         mSupplierName = findViewById(R.id.detail_supplier_name_value);
         mSupplierPhone = findViewById(R.id.detail_supplier_phone_value);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_details, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.edit_book:
+                Intent intent = new Intent(BookDetailsActivity.this, BookEditorActivity.class);
+                intent.setData(mCurrentBookUri);
+                startActivity(intent);
+                return true;
+            case R.id.delete_book:
+                showDeleteConfirmationDialog();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -82,5 +108,36 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
+    }
+
+    private void showDeleteConfirmationDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_book_dialog_message);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                deleteBook();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void deleteBook() {
+        if (mCurrentBookUri != null) {
+            int rowsDeleted = getContentResolver().delete(mCurrentBookUri, null, null);
+            if (rowsDeleted == 0) {
+                Toast.makeText(this, R.string.error_delete_book, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.success_delete_book,Toast.LENGTH_SHORT).show();
+            }
+        }
+        finish();
     }
 }
