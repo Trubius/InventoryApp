@@ -26,4 +26,5 @@
     <string name="success_delete_book">Book deleted</string>
     <string name="success_delete_all_books">All books deleted</string>
     <string name="error_delete_all_books">Error with deleting all books</string>
+    <string name="save_book">Save book</string>
 </resources>
