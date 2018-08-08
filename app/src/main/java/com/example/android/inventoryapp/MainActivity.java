@@ -5,6 +5,7 @@ import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                insertBook();
+                Intent intent = new Intent(MainActivity.this, BookEditorActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -65,9 +67,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void deleteAllBooks() {
         int rowsDeleted = getContentResolver().delete(BookEntry.CONTENT_URI, null, null);
         if (rowsDeleted == 0) {
-            Toast.makeText(this, R.string.error_delete_all_books, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.delete_all_books_failed, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, R.string.success_delete_all_books,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.delete_all_books_success, Toast.LENGTH_SHORT).show();
         }
     }
 
