@@ -53,6 +53,12 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
         mEditQuantity = findViewById(R.id.edit_quantity_value);
         mEditSupplierName = findViewById(R.id.edit_supplier_name_value);
         mEditSupplierPhone = findViewById(R.id.edit_supplier_phone_value);
+
+        mEditBookName.setOnTouchListener(mTouchListener);
+        mEditPrice.setOnTouchListener(mTouchListener);
+        mEditQuantity.setOnTouchListener(mTouchListener);
+        mEditSupplierName.setOnTouchListener(mTouchListener);
+        mEditSupplierPhone.setOnTouchListener(mTouchListener);
     }
 
     @Override
