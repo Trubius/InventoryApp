@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/details_margin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/detail_book_name_label"
+        app:layout_constraintStart_toEndOf="@id/detail_book_name_label"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/book_name" />
 
@@ -29,9 +29,9 @@
         style="@style/detailTextLabelStyle"
         android:layout_width="0dp"
         android:text="@string/price"
-        app:layout_constraintEnd_toStartOf="@+id/detail_price_value"
+        app:layout_constraintEnd_toStartOf="@id/detail_price_value"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/detail_price_value" />
+        app:layout_constraintTop_toTopOf="@id/detail_price_value" />
 
     <TextView
         android:id="@+id/detail_price_value"
@@ -39,8 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/details_margin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/detail_book_name_value"
-        app:layout_constraintTop_toBottomOf="@+id/detail_book_name_value"
+        app:layout_constraintStart_toStartOf="@id/detail_book_name_value"
+        app:layout_constraintTop_toBottomOf="@id/detail_book_name_value"
         tools:text="@string/price" />
 
     <TextView
@@ -58,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/details_margin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/detail_price_value"
+        app:layout_constraintStart_toStartOf="@id/detail_price_value"
         app:layout_constraintTop_toBottomOf="@id/detail_price_value"
         tools:text="@string/quantity" />
 
