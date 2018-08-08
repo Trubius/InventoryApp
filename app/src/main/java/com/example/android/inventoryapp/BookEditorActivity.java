@@ -77,14 +77,15 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
         switch (item.getItemId()) {
             case R.id.save_book:
                 return true;
-            case R.id.home:
+            case android.R.id.home:
                 if (!mBookChanged){
-                    NavUtils.navigateUpFromSameTask(BookEditorActivity.this);
+                    finish();
+                    return true;
                 }
                 DialogInterface.OnClickListener discardButtonClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        NavUtils.navigateUpFromSameTask(BookEditorActivity.this);
+                        finish();
                     }
                 };
                 showUnsavedChangesDialog(discardButtonClickListener);
