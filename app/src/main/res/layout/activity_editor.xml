@@ -11,97 +11,133 @@
         android:layout_width="@dimen/book_name_width"
         android:text="@string/book_name"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/edit_book_name_layout" />
 
-    <EditText
-        android:id="@+id/edit_book_name_value"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/edit_book_name_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/details_margin"
-        android:hint="@string/book_name"
-        android:inputType="text"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edit_book_name_label"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/edit_book_name_label"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edit_book_name_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/book_name"
+            android:inputType="text" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/edit_price_label"
         style="@style/detailTextLabelStyle"
         android:layout_width="0dp"
         android:text="@string/price"
-        app:layout_constraintEnd_toStartOf="@+id/edit_price_value"
+        app:layout_constraintEnd_toStartOf="@id/edit_price_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/edit_price_value" />
+        app:layout_constraintTop_toTopOf="@id/edit_price_layout" />
 
-    <EditText
-        android:id="@+id/edit_price_value"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/edit_price_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/details_margin"
-        android:hint="@string/price"
-        android:inputType="numberDecimal"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/edit_book_name_value"
-        app:layout_constraintTop_toBottomOf="@+id/edit_book_name_value" />
+        app:layout_constraintStart_toStartOf="@id/edit_book_name_layout"
+        app:layout_constraintTop_toBottomOf="@id/edit_book_name_layout">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edit_price_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/price"
+            android:inputType="numberDecimal" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/edit_quantity_label"
         style="@style/detailTextLabelStyle"
         android:layout_width="0dp"
         android:text="@string/quantity"
-        app:layout_constraintEnd_toStartOf="@id/edit_quantity_value"
+        app:layout_constraintEnd_toStartOf="@id/edit_quantity_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/edit_quantity_value" />
+        app:layout_constraintTop_toTopOf="@id/edit_quantity_layout" />
 
-    <EditText
-        android:id="@+id/edit_quantity_value"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/edit_quantity_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/details_margin"
-        android:hint="@string/quantity"
-        android:inputType="number"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/edit_price_value"
-        app:layout_constraintTop_toBottomOf="@id/edit_price_value" />
+        app:layout_constraintStart_toStartOf="@id/edit_price_layout"
+        app:layout_constraintTop_toBottomOf="@id/edit_price_layout">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edit_quantity_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/quantity"
+            android:inputType="number" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/edit_supplier_name_label"
         style="@style/detailTextLabelStyle"
         android:layout_width="0dp"
         android:text="@string/supplier_name"
-        app:layout_constraintEnd_toStartOf="@id/edit_supplier_name_value"
+        app:layout_constraintEnd_toStartOf="@id/edit_supplier_name_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/edit_supplier_name_value" />
+        app:layout_constraintTop_toTopOf="@id/edit_supplier_name_layout" />
 
-    <EditText
-        android:id="@+id/edit_supplier_name_value"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/edit_supplier_name_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/details_margin"
-        android:hint="@string/supplier_name"
-        android:inputType="text"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/edit_quantity_value"
-        app:layout_constraintTop_toBottomOf="@id/edit_quantity_value" />
+        app:layout_constraintStart_toStartOf="@id/edit_quantity_layout"
+        app:layout_constraintTop_toBottomOf="@id/edit_quantity_layout">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edit_supplier_name_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/supplier_name"
+            android:inputType="text" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/edit_supplier_phone_label"
         style="@style/detailTextLabelStyle"
         android:layout_width="0dp"
         android:text="@string/supplier_phone_number"
-        app:layout_constraintEnd_toStartOf="@id/edit_supplier_phone_value"
+        app:layout_constraintEnd_toStartOf="@id/edit_supplier_phone_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/edit_supplier_phone_value" />
+        app:layout_constraintTop_toTopOf="@id/edit_supplier_phone_layout" />
 
-    <EditText
-        android:id="@+id/edit_supplier_phone_value"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/edit_supplier_phone_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/details_margin"
-        android:hint="@string/supplier_phone_number"
-        android:inputType="phone"
+        app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/edit_supplier_name_value"
-        app:layout_constraintTop_toBottomOf="@id/edit_supplier_name_value" />
+        app:layout_constraintStart_toStartOf="@id/edit_supplier_name_layout"
+        app:layout_constraintTop_toBottomOf="@id/edit_supplier_name_layout">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/edit_supplier_phone_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/supplier_phone_number"
+            android:inputType="phone" />
+
+    </android.support.design.widget.TextInputLayout>
 
 </android.support.constraint.ConstraintLayout>
