@@ -2,6 +2,7 @@ package com.example.android.inventoryapp;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,13 +11,15 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.NavUtils;
+import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.BookContract.BookEntry;
 
@@ -24,11 +27,21 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
 
     private static final int EXISTING_BOOK_LOADER_ID = 1;
     private Uri mCurrentBookUri;
-    private EditText mEditBookName;
-    private EditText mEditPrice;
-    private EditText mEditQuantity;
-    private EditText mEditSupplierName;
-    private EditText mEditSupplierPhone;
+    private TextInputEditText mEditBookName;
+    private TextInputEditText mEditPrice;
+    private TextInputEditText mEditQuantity;
+    private TextInputEditText mEditSupplierName;
+    private TextInputEditText mEditSupplierPhone;
+    private String mBookName;
+    private String mPrice;
+    private String mQuantity;
+    private String mSupplierName;
+    private String mSupplierPhone;
+    private TextInputLayout mBookNameLayout;
+    private TextInputLayout mPriceLayout;
+    private TextInputLayout mQuantityLayout;
+    private TextInputLayout mSupplierNameLayout;
+    private TextInputLayout mSupplierPhoneLayout;
     private boolean mBookChanged = false;
 
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
@@ -46,9 +59,9 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
 
         Intent intent = getIntent();
         mCurrentBookUri = intent.getData();
-        if (mCurrentBookUri == null){
+        if (mCurrentBookUri == null) {
             setTitle(getString(R.string.add_book));
-        }else {
+        } else {
             setTitle(getString(R.string.edit_book));
             getLoaderManager().initLoader(EXISTING_BOOK_LOADER_ID, null, this);
         }
@@ -76,9 +89,10 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_book:
+                saveBook();
                 return true;
             case android.R.id.home:
-                if (!mBookChanged){
+                if (!mBookChanged) {
                     finish();
                     return true;
                 }
@@ -171,5 +185,85 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
         });
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void saveBook() {
+        mBookName = mEditBookName.getText().toString().trim();
+        mPrice = mEditPrice.getText().toString().trim();
+        mQuantity = mEditQuantity.getText().toString().trim();
+        mSupplierName = mEditSupplierName.getText().toString().trim();
+        mSupplierPhone = mEditSupplierPhone.getText().toString().trim();
+        mBookNameLayout = findViewById(R.id.edit_book_name_layout);
+        mPriceLayout = findViewById(R.id.edit_price_layout);
+        mQuantityLayout = findViewById(R.id.edit_quantity_layout);
+        mSupplierNameLayout = findViewById(R.id.edit_supplier_name_layout);
+        mSupplierPhoneLayout = findViewById(R.id.edit_supplier_phone_layout);
+
+        if (checkEmptyFields()) {
+            return;
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(BookEntry.COLUMN_BOOK_NAME, mBookName);
+        values.put(BookEntry.COLUMN_BOOK_PRICE, mPrice);
+        values.put(BookEntry.COLUMN_BOOK_QUANTITY, mQuantity);
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, mSupplierName);
+        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, mSupplierPhone);
+
+        if (mCurrentBookUri == null) {
+
+            Uri newUri = getContentResolver().insert(BookEntry.CONTENT_URI, values);
+            if (newUri == null) {
+                Toast.makeText(this, getString(R.string.save_book_failed), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.save_book_success, Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            int rowsAffected = getContentResolver().update(mCurrentBookUri, values, null, null);
+
+            if (rowsAffected == 0) {
+                Toast.makeText(this, R.string.update_book_failed, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, R.string.update_book_success, Toast.LENGTH_SHORT).show();
+            }
+        }
+        finish();
+    }
+
+    private boolean checkEmptyFields() {
+
+        boolean hasError = false;
+
+        if (TextUtils.isEmpty(mBookName)) {
+            mBookNameLayout.setError(getString(R.string.book_name_required));
+            hasError = true;
+        } else {
+            mBookNameLayout.setError(null);
+        }
+        if (TextUtils.isEmpty(mPrice)) {
+            mPriceLayout.setError(getString(R.string.price_required));
+            hasError = true;
+        } else {
+            mPriceLayout.setError(null);
+        }
+        if (TextUtils.isEmpty(mQuantity)) {
+            mQuantityLayout.setError(getString(R.string.quantity_required));
+            hasError = true;
+        } else {
+            mQuantityLayout.setError(null);
+        }
+        if (TextUtils.isEmpty(mSupplierName)) {
+            mSupplierNameLayout.setError(getString(R.string.supplier_name_required));
+            hasError = true;
+        } else {
+            mSupplierNameLayout.setError(null);
+        }
+        if (TextUtils.isEmpty(mSupplierPhone)) {
+            mSupplierPhoneLayout.setError(getString(R.string.supplier_phone_required));
+            hasError = true;
+        } else {
+            mSupplierPhoneLayout.setError(null);
+        }
+        return hasError;
     }
 }

@@ -22,12 +22,21 @@
     <string name="edit_book">Edit book</string>
     <string name="delete_book">Delete book</string>
     <string name="delete_book_dialog_message">Delete this book?</string>
-    <string name="error_delete_book">Error with deleting book</string>
-    <string name="success_delete_book">Book deleted</string>
-    <string name="success_delete_all_books">All books deleted</string>
-    <string name="error_delete_all_books">Error with deleting all books</string>
+    <string name="delete_book_failed">Error with deleting book</string>
+    <string name="delete_book_success">Book deleted</string>
+    <string name="delete_all_books_success">All books deleted</string>
+    <string name="delete_all_books_failed">Error with deleting all books</string>
     <string name="save_book">Save book</string>
     <string name="unsaved_changes_dialog_message">Discard your changes and quit editing?</string>
     <string name="discard">Discard</string>
     <string name="keep_editing">Keep editing</string>
+    <string name="save_book_failed">Error with saving book</string>
+    <string name="save_book_success">Book saved</string>
+    <string name="update_book_failed">Error with updating book</string>
+    <string name="update_book_success">Book updated</string>
+    <string name="book_name_required">Book name is required</string>
+    <string name="price_required">Price is required</string>
+    <string name="quantity_required">Quantity is required</string>
+    <string name="supplier_name_required">Supplier name is required</string>
+    <string name="supplier_phone_required">Supplier phone number is required</string>
 </resources>
