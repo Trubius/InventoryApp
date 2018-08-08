@@ -94,6 +94,21 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
     }
 
     @Override
+    public void onBackPressed() {
+        if (!mBookChanged) {
+            super.onBackPressed();
+            return;
+        }
+        DialogInterface.OnClickListener discardButtonClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        };
+        showUnsavedChangesDialog(discardButtonClickListener);
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         String[] projection = {
