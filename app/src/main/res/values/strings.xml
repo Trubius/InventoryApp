@@ -27,4 +27,7 @@
     <string name="success_delete_all_books">All books deleted</string>
     <string name="error_delete_all_books">Error with deleting all books</string>
     <string name="save_book">Save book</string>
+    <string name="unsaved_changes_dialog_message">Discard your changes and quit editing?</string>
+    <string name="discard">Discard</string>
+    <string name="keep_editing">Keep editing</string>
 </resources>
