@@ -133,9 +133,9 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
         if (mCurrentBookUri != null) {
             int rowsDeleted = getContentResolver().delete(mCurrentBookUri, null, null);
             if (rowsDeleted == 0) {
-                Toast.makeText(this, R.string.error_delete_book, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.delete_book_failed, Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, R.string.success_delete_book,Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.delete_book_success, Toast.LENGTH_SHORT).show();
             }
         }
         finish();

@@ -2,7 +2,6 @@ package com.example.android.inventoryapp;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
-import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -48,20 +47,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         recyclerView.setAdapter(mBookCursorAdapter);
 
         getLoaderManager().initLoader(BOOK_LOADER_ID, null, this);
-    }
-
-    private void insertBook() {
-
-        ContentValues values = new ContentValues();
-        values.put(BookEntry.COLUMN_BOOK_NAME, getString(R.string.lord_of_the_rings));
-        values.put(BookEntry.COLUMN_BOOK_PRICE, 20);
-        values.put(BookEntry.COLUMN_BOOK_QUANTITY, 1);
-        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_NAME, getString(R.string.amazon));
-        values.put(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE, getString(R.string.phone_number));
-
-        getContentResolver().insert(BookEntry.CONTENT_URI, values);
-
-        Toast.makeText(this, getString(R.string.book_saved), Toast.LENGTH_SHORT).show();
     }
 
     private void deleteAllBooks() {

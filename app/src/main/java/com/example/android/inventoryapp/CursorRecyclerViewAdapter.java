@@ -30,10 +30,6 @@ public abstract class CursorRecyclerViewAdapter<ViewHolder extends RecyclerView.
         setHasStableIds(true);
     }
 
-    public Cursor getCursor(){
-        return mCursor;
-    }
-
     @Override
     public int getItemCount() {
         if (mDataValid && mCursor != null){
@@ -63,21 +59,6 @@ public abstract class CursorRecyclerViewAdapter<ViewHolder extends RecyclerView.
         onBindViewHolder(holder, mCursor);
     }
 
-    /**
-     * Change the underlying cursor to a new cursor. If there is an existing cursor it will be
-     * closed.
-     */
-    public void changeCursor(Cursor cursor) {
-        Cursor old = swapCursor(cursor);
-        if (old != null) {
-            old.close();
-        }
-    }
-
-    /**
-     * Swap in a new Cursor, returning the old Cursor.  Unlike
-     * {@link #changeCursor(Cursor)}, the returned old Cursor is not closed.
-     */
     public Cursor swapCursor(Cursor newCursor) {
         if (newCursor == mCursor) {
             return null;
