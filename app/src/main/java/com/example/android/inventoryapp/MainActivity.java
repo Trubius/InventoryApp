@@ -93,12 +93,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.delete_all_books) {
-            showDeleteConfirmationDialog();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.delete_all_books:
+                showDeleteConfirmationDialog();
+                return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
