@@ -63,7 +63,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void deleteAllBooks() {
-        getContentResolver().delete(BookEntry.CONTENT_URI, null, null);
+        int rowsDeleted = getContentResolver().delete(BookEntry.CONTENT_URI, null, null);
+        if (rowsDeleted == 0) {
+            Toast.makeText(this, R.string.error_delete_all_books, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, R.string.success_delete_all_books,Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showDeleteConfirmationDialog() {
