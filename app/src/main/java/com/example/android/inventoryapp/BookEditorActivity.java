@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.EditText;
 
 import com.example.android.inventoryapp.data.BookContract.BookEntry;
@@ -22,6 +24,15 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
     private EditText mEditQuantity;
     private EditText mEditSupplierName;
     private EditText mEditSupplierPhone;
+    private boolean mBookChanged = false;
+
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            mBookChanged = true;
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
