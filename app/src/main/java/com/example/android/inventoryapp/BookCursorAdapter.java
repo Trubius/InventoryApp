@@ -46,7 +46,11 @@ public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapt
 
         viewHolder.mBookName.setText(bookName);
         viewHolder.mPrice.setText(Utils.formatPrice(price));
-        viewHolder.mQuantity.setText(String.valueOf(quantity));
+        if (quantity == 0) {
+            viewHolder.mQuantity.setText(R.string.out_of_stock);
+        } else {
+            viewHolder.mQuantity.setText(String.valueOf(quantity));
+        }
         viewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

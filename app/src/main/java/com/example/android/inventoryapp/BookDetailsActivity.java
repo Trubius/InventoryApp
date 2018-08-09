@@ -100,7 +100,11 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
 
             mBookName.setText(bookName);
             mPrice.setText(Utils.formatPrice(price));
-            mQuantity.setText(String.valueOf(quantity));
+            if (quantity == 0) {
+                mQuantity.setText(R.string.out_of_stock);
+            } else {
+                mQuantity.setText(String.valueOf(quantity));
+            }
             mSupplierName.setText(supplierName);
             mSupplierPhone.setText(supplierPhone);
         }
