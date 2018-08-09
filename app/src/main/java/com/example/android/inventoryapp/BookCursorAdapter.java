@@ -1,6 +1,7 @@
 package com.example.android.inventoryapp;
 
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,6 +19,7 @@ import com.example.android.inventoryapp.data.BookContract.BookEntry;
 public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapter.ViewHolder> {
 
     private Context mContext;
+    private Uri currentBookUri;
 
     public BookCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor);
@@ -39,7 +41,7 @@ public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapt
         int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
         String bookName = cursor.getString(bookNameColumnIndex);
         double price = cursor.getDouble(priceColumnIndex);
-        int quantity = cursor.getInt(quantityColumnIndex);
+        final int quantity = cursor.getInt(quantityColumnIndex);
         final long bookId = cursor.getLong(bookIdColumnIndex);
 
         viewHolder.mBookName.setText(bookName);
@@ -49,9 +51,23 @@ public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapt
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext.getApplicationContext(), BookDetailsActivity.class);
-                Uri currentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, bookId);
+                currentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, bookId);
                 intent.setData(currentBookUri);
                 mContext.startActivity(intent);
+            }
+        });
+        viewHolder.mSaleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int newQuantity = quantity - 1;
+                if (newQuantity < 0) {
+                    newQuantity = 0;
+                }
+                currentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, bookId);
+                ContentValues values = new ContentValues();
+                values.put(BookEntry.COLUMN_BOOK_QUANTITY, newQuantity);
+
+                mContext.getContentResolver().update(currentBookUri, values, null, null);
             }
         });
     }
