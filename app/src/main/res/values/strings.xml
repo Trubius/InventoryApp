@@ -39,4 +39,5 @@
     <string name="quantity_required">Quantity is required</string>
     <string name="supplier_name_required">Supplier name is required</string>
     <string name="supplier_phone_required">Supplier phone number is required</string>
+    <string name="out_of_stock">Out of stock</string>
 </resources>
