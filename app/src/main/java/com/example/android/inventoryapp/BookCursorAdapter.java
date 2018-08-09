@@ -38,12 +38,12 @@ public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapt
         int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
         int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
         String bookName = cursor.getString(bookNameColumnIndex);
-        int price = cursor.getInt(priceColumnIndex);
+        double price = cursor.getDouble(priceColumnIndex);
         int quantity = cursor.getInt(quantityColumnIndex);
         final long bookId = cursor.getLong(bookIdColumnIndex);
 
         viewHolder.mBookName.setText(bookName);
-        viewHolder.mPrice.setText(String.valueOf(price));
+        viewHolder.mPrice.setText(Utils.formatPrice(price));
         viewHolder.mQuantity.setText(String.valueOf(quantity));
         viewHolder.mItemView.setOnClickListener(new View.OnClickListener() {
             @Override

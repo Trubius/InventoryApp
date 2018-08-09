@@ -93,13 +93,13 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
             int supplierNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
             int supplierPhoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
             String bookName = cursor.getString(bookNameColumnIndex);
-            int price = cursor.getInt(priceColumnIndex);
+            double price = cursor.getDouble(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
             String supplierName = cursor.getString(supplierNameColumnIndex);
             String supplierPhone = cursor.getString(supplierPhoneColumnIndex);
 
             mBookName.setText(bookName);
-            mPrice.setText(String.valueOf(price));
+            mPrice.setText(Utils.formatPrice(price));
             mQuantity.setText(String.valueOf(quantity));
             mSupplierName.setText(supplierName);
             mSupplierPhone.setText(supplierPhone);

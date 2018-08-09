@@ -150,13 +150,13 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
             int supplierNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
             int supplierPhoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
             String bookName = cursor.getString(bookNameColumnIndex);
-            int price = cursor.getInt(priceColumnIndex);
+            double price = cursor.getDouble(priceColumnIndex);
             int quantity = cursor.getInt(quantityColumnIndex);
             String supplierName = cursor.getString(supplierNameColumnIndex);
             String supplierPhone = cursor.getString(supplierPhoneColumnIndex);
 
             mEditBookName.setText(bookName);
-            mEditPrice.setText(String.valueOf(price));
+            mEditPrice.setText(Utils.formatInputPrice(price));
             mEditQuantity.setText(String.valueOf(quantity));
             mEditSupplierName.setText(supplierName);
             mEditSupplierPhone.setText(supplierPhone);
