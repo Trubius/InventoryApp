@@ -19,7 +19,7 @@ import com.example.android.inventoryapp.data.BookContract.BookEntry;
 public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapter.ViewHolder> {
 
     private Context mContext;
-    private Uri currentBookUri;
+    private Uri mCurrentBookUri;
 
     public BookCursorAdapter(Context context, Cursor cursor) {
         super(context, cursor);
@@ -57,8 +57,8 @@ public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapt
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext.getApplicationContext(), BookDetailsActivity.class);
-                currentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, bookId);
-                intent.setData(currentBookUri);
+                mCurrentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, bookId);
+                intent.setData(mCurrentBookUri);
                 mContext.startActivity(intent);
             }
         });
@@ -69,11 +69,11 @@ public class BookCursorAdapter extends CursorRecyclerViewAdapter<BookCursorAdapt
                 if (newQuantity < 0) {
                     newQuantity = 0;
                 }
-                currentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, bookId);
+                mCurrentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, bookId);
                 ContentValues values = new ContentValues();
                 values.put(BookEntry.COLUMN_BOOK_QUANTITY, newQuantity);
 
-                mContext.getContentResolver().update(currentBookUri, values, null, null);
+                mContext.getContentResolver().update(mCurrentBookUri, values, null, null);
             }
         });
     }
