@@ -57,10 +57,29 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/details_margin"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/detail_price_value"
         app:layout_constraintTop_toBottomOf="@id/detail_price_value"
         tools:text="@string/quantity" />
+
+    <ImageButton
+        android:id="@+id/button_quantity_decrease"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/details_margin"
+        android:contentDescription="@string/decrease_quantity"
+        android:src="@drawable/ic_remove"
+        app:layout_constraintStart_toEndOf="@+id/detail_quantity_value"
+        app:layout_constraintTop_toBottomOf="@id/detail_price_value" />
+
+    <ImageButton
+        android:id="@+id/button_quantity_increase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small_margin"
+        android:contentDescription="@string/increase_quantity"
+        android:src="@drawable/ic_add"
+        app:layout_constraintStart_toEndOf="@id/button_quantity_decrease"
+        app:layout_constraintTop_toBottomOf="@id/detail_price_value" />
 
     <TextView
         android:id="@+id/detail_supplier_name_label"

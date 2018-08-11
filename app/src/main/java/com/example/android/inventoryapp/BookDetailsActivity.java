@@ -2,6 +2,8 @@ package com.example.android.inventoryapp;
 
 import android.app.AlertDialog;
 import android.app.LoaderManager;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +15,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +31,8 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
     private TextView mQuantity;
     private TextView mSupplierName;
     private TextView mSupplierPhone;
+    private ImageButton mDecreaseQuantity;
+    private ImageButton mIncreaseQuantity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +49,8 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
         mQuantity = findViewById(R.id.detail_quantity_value);
         mSupplierName = findViewById(R.id.detail_supplier_name_value);
         mSupplierPhone = findViewById(R.id.detail_supplier_phone_value);
+        mDecreaseQuantity = findViewById(R.id.button_quantity_decrease);
+        mIncreaseQuantity = findViewById(R.id.button_quantity_increase);
     }
 
     @Override
@@ -87,14 +95,16 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
         }
 
         if (cursor.moveToFirst()) {
+            int bookIdColumnIndex = cursor.getColumnIndex(BookEntry._ID);
             int bookNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_NAME);
             int priceColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_PRICE);
             int quantityColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_QUANTITY);
             int supplierNameColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_NAME);
             int supplierPhoneColumnIndex = cursor.getColumnIndex(BookEntry.COLUMN_BOOK_SUPPLIER_PHONE);
+            final long bookId = cursor.getLong(bookIdColumnIndex);
             String bookName = cursor.getString(bookNameColumnIndex);
             double price = cursor.getDouble(priceColumnIndex);
-            int quantity = cursor.getInt(quantityColumnIndex);
+            final int quantity = cursor.getInt(quantityColumnIndex);
             String supplierName = cursor.getString(supplierNameColumnIndex);
             String supplierPhone = cursor.getString(supplierPhoneColumnIndex);
 
@@ -102,11 +112,38 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
             mPrice.setText(Utils.formatPrice(price));
             if (quantity == 0) {
                 mQuantity.setText(R.string.out_of_stock);
+                mDecreaseQuantity.setEnabled(false);
             } else {
                 mQuantity.setText(String.valueOf(quantity));
+                mDecreaseQuantity.setEnabled(true);
             }
             mSupplierName.setText(supplierName);
             mSupplierPhone.setText(supplierPhone);
+            mDecreaseQuantity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int newQuantity = quantity - 1;
+                    if (newQuantity < 0) {
+                        newQuantity = 0;
+                    }
+                    mCurrentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, bookId);
+                    ContentValues values = new ContentValues();
+                    values.put(BookEntry.COLUMN_BOOK_QUANTITY, newQuantity);
+
+                    getContentResolver().update(mCurrentBookUri, values, null, null);
+                }
+            });
+            mIncreaseQuantity.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int newQuantity = quantity + 1;
+                    mCurrentBookUri = ContentUris.withAppendedId(BookEntry.CONTENT_URI, bookId);
+                    ContentValues values = new ContentValues();
+                    values.put(BookEntry.COLUMN_BOOK_QUANTITY, newQuantity);
+
+                    getContentResolver().update(mCurrentBookUri, values, null, null);
+                }
+            });
         }
     }
 
