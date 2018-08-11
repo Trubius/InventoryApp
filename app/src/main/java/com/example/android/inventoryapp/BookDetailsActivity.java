@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
     private TextView mSupplierPhone;
     private ImageButton mDecreaseQuantity;
     private ImageButton mIncreaseQuantity;
+    private Button mContactSupplier;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
         mSupplierPhone = findViewById(R.id.detail_supplier_phone_value);
         mDecreaseQuantity = findViewById(R.id.button_quantity_decrease);
         mIncreaseQuantity = findViewById(R.id.button_quantity_increase);
+        mContactSupplier = findViewById(R.id.contact_supplier_button);
     }
 
     @Override
@@ -142,6 +145,16 @@ public class BookDetailsActivity extends AppCompatActivity implements LoaderMana
                     values.put(BookEntry.COLUMN_BOOK_QUANTITY, newQuantity);
 
                     getContentResolver().update(mCurrentBookUri, values, null, null);
+                }
+            });
+            mContactSupplier.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String phoneNumber = mSupplierPhone.getText().toString();
+                    if (!phoneNumber.startsWith("tel:")) phoneNumber = "tel:" + phoneNumber;
+                    Intent phoneIntent = new Intent(Intent.ACTION_DIAL);
+                    phoneIntent.setData(Uri.parse(phoneNumber));
+                    startActivity(phoneIntent);
                 }
             });
         }
