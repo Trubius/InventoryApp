@@ -9,7 +9,6 @@
     <TextView
         android:id="@+id/detail_book_name_label"
         style="@style/detailTextLabelStyle"
-        android:layout_width="@dimen/book_name_width"
         android:text="@string/book_name"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -19,104 +18,105 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/details_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/detail_book_name_label"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_book_name_label"
         tools:text="@string/book_name" />
 
     <TextView
         android:id="@+id/detail_price_label"
         style="@style/detailTextLabelStyle"
-        android:layout_width="0dp"
         android:text="@string/price"
-        app:layout_constraintEnd_toStartOf="@id/detail_price_value"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/detail_price_value" />
+        app:layout_constraintTop_toBottomOf="@+id/detail_book_name_value" />
 
     <TextView
         android:id="@+id/detail_price_value"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/details_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/detail_book_name_value"
-        app:layout_constraintTop_toBottomOf="@id/detail_book_name_value"
+        android:layout_marginTop="@dimen/adjust_margin"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/detail_quantity_value"
+        app:layout_constraintTop_toTopOf="@+id/detail_price_label"
         tools:text="@string/price" />
 
     <TextView
         android:id="@+id/detail_quantity_label"
         style="@style/detailTextLabelStyle"
-        android:layout_width="0dp"
         android:text="@string/quantity"
-        app:layout_constraintEnd_toStartOf="@id/detail_quantity_value"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/detail_quantity_value" />
+        app:layout_constraintTop_toBottomOf="@+id/detail_price_label" />
 
     <TextView
         android:id="@+id/detail_quantity_value"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/details_margin"
-        app:layout_constraintStart_toStartOf="@id/detail_price_value"
-        app:layout_constraintTop_toBottomOf="@id/detail_price_value"
+        android:layout_marginStart="@dimen/quantity_value_margin"
+        android:layout_marginTop="@dimen/adjust_margin"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@+id/detail_quantity_label"
+        app:layout_constraintTop_toTopOf="@+id/detail_quantity_label"
         tools:text="@string/quantity" />
 
     <ImageButton
         android:id="@+id/button_quantity_decrease"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/details_margin"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:layout_marginEnd="@dimen/details_margin"
+        android:background="@color/color_red"
         android:contentDescription="@string/decrease_quantity"
         android:src="@drawable/ic_remove"
-        app:layout_constraintStart_toEndOf="@+id/detail_quantity_value"
-        app:layout_constraintTop_toBottomOf="@id/detail_price_value" />
+        app:layout_constraintEnd_toStartOf="@+id/button_quantity_increase"
+        app:layout_constraintTop_toTopOf="@+id/detail_quantity_label" />
 
     <ImageButton
         android:id="@+id/button_quantity_increase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/small_margin"
+        android:layout_width="@dimen/button_size"
+        android:layout_height="@dimen/button_size"
+        android:background="@color/colorPrimary"
         android:contentDescription="@string/increase_quantity"
         android:src="@drawable/ic_add"
-        app:layout_constraintStart_toEndOf="@id/button_quantity_decrease"
-        app:layout_constraintTop_toBottomOf="@id/detail_price_value" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/detail_quantity_label" />
 
     <TextView
         android:id="@+id/detail_supplier_name_label"
         style="@style/detailTextLabelStyle"
-        android:layout_width="0dp"
         android:text="@string/supplier_name"
-        app:layout_constraintEnd_toStartOf="@id/detail_supplier_name_value"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/detail_supplier_name_value" />
+        app:layout_constraintTop_toBottomOf="@+id/detail_quantity_label" />
 
     <TextView
         android:id="@+id/detail_supplier_name_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/details_margin"
+        android:layout_marginStart="@dimen/details_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/detail_quantity_value"
-        app:layout_constraintTop_toBottomOf="@id/detail_quantity_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_supplier_name_label"
         tools:text="@string/supplier_name" />
 
     <TextView
         android:id="@+id/detail_supplier_phone_label"
         style="@style/detailTextLabelStyle"
-        android:layout_width="0dp"
         android:text="@string/supplier_phone_number"
-        app:layout_constraintEnd_toStartOf="@id/detail_supplier_phone_value"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/detail_supplier_phone_value" />
+        app:layout_constraintTop_toBottomOf="@+id/detail_supplier_name_value" />
 
     <TextView
         android:id="@+id/detail_supplier_phone_value"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/details_margin"
+        android:layout_marginStart="@dimen/details_margin"
+        android:layout_marginTop="@dimen/small_margin"
+        android:textColor="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/detail_supplier_name_value"
-        app:layout_constraintTop_toBottomOf="@id/detail_supplier_name_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detail_supplier_phone_label"
         tools:text="@string/supplier_phone_number" />
 
 
@@ -128,6 +128,6 @@
         android:text="@string/contact_supplier"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/detail_supplier_phone_label" />
+        app:layout_constraintTop_toBottomOf="@+id/detail_supplier_phone_value" />
 
 </android.support.constraint.ConstraintLayout>
