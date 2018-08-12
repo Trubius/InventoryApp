@@ -1,5 +1,6 @@
 package com.example.android.inventoryapp;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.LoaderManager;
 import android.content.ContentValues;
@@ -19,6 +20,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.android.inventoryapp.data.BookContract.BookEntry;
@@ -77,6 +81,8 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
         mEditQuantity.setOnTouchListener(mTouchListener);
         mEditSupplierName.setOnTouchListener(mTouchListener);
         mEditSupplierPhone.setOnTouchListener(mTouchListener);
+
+        hideKeyboard(findViewById(R.id.root_view));
     }
 
     @Override
@@ -265,5 +271,31 @@ public class BookEditorActivity extends AppCompatActivity implements LoaderManag
             mSupplierPhoneLayout.setError(null);
         }
         return hasError;
+    }
+
+    private void hideKeyboard(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(v);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                hideKeyboard(innerView);
+            }
+        }
+    }
+
+    private void hideSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }
